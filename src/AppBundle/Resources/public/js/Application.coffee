@@ -1,15 +1,21 @@
 App = App || {}
 
 App.Application = Backbone.Marionette.Application.extend
+  albumMaxImagesCount : 10
+
   createRootLayout : () ->
     this.root = new App.RootLayout()
     this.root.render()
-    this.root.showSidebar()
 
-  createRouter : () ->
+    this.controller.renderAlbums()
+    this.controller.renderAlbumsWithMaxImages()
+
+  createController : () ->
     this.controller = new App.Controller()
-    this.router = new Marionette.AppRouter
-      controller : this.controller
+
+  createRouter : (controller) ->
+    controller.router = new Marionette.AppRouter
+      controller : controller
       appRoutes:
         "" : "albums"
         "album/:id" : "imagesPaginatedFirstPage"
@@ -18,13 +24,15 @@ App.Application = Backbone.Marionette.Application.extend
 # Start application after DOM is complete
 
 $(() ->
-  app = new App.Application()
+  window.app = new App.Application()
 
-  app.on 'before:start', () ->
-    # Initialize Marionette and Backbone stuff
+  window.app.on 'before:start', () ->
+    # Initialize application and Backbone stuff
 
-    app.createRootLayout();
-    app.createRouter();
+    window.app.createController();
+    window.app.createRouter(window.app.controller);
+
+    window.app.createRootLayout();
 
     Backbone.history.start();
 
@@ -34,5 +42,5 @@ $(() ->
       itemSelector : '.grid-item',
       columnWidth : 200
 
-  app.start()
+  window.app.start()
 )

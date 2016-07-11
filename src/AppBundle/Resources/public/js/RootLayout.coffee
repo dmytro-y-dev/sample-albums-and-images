@@ -1,11 +1,19 @@
 App = App || {}
 
 App.RootLayout = Backbone.Marionette.LayoutView.extend
-  template: "#template-rootLayoutView"
+  el : "#overall"
+  template : "#template-rootLayoutView"
 
   regions :
-    sidebar : '#sidebar'
-    main : '#main'
+    albums : '#albums'
+    albumsWithMaxImages : '#albums-with-max-images'
+    images : '#images'
 
-  showSidebar : () ->
-    this.sidebar.show(new App.AlbumListView())
+  showAlbums : (albums) ->
+    this.albums.show(new App.AlbumsListView(albums))
+
+  showAlbumsWithMaxImages : (albums) ->
+    this.albumsWithMaxImages.show(new App.AlbumsListView(albums))
+
+  showImages : (images) ->
+    this.images.show(new App.ImagesListView(images))

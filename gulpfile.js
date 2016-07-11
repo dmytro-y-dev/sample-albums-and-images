@@ -58,7 +58,7 @@ gulp.task('compile-coffee-app', function() {
     gulp.src('src/AppBundle/Resources/public/**/*.coffee')
         .pipe(sourcemaps.init())
         .pipe(coffee({bare: true}).on('error', gutil.log))
-        .pipe(uglify({mangle:false}))
+        .pipe(uglify())
         .pipe(rename({extname: ".min.js"}))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('web/bundles/app'));

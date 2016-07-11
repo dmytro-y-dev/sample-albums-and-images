@@ -3,7 +3,10 @@
 {% block title %}Homepage{% endblock %}
 
 {% block body %}
-
+    <div class="container">
+        <div class="row" id="overall">
+        </div>
+    </div>
 {% endblock %}
 
 {% block stylesheets %}
@@ -23,32 +26,27 @@
     <script type="text/javascript" src="{{ asset('bundles/masonry/masonry.pkgd.min.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('bundles/app/js/Album.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/AlbumView.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/ImageView.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/app/js/Image.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/RootLayout.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/Controller.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/Application.min.js') }}"></script>
 
     <script id="template-rootLayoutView" type="text/template">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-lg-2" id="sidebar">
-                    <div id="albums"></div>
-                    <div id="albums-with-max-10-images"></div>
-                </div>
+        <div class="col-md-4 col-lg-2" id="sidebar">
+            <div id="albums"></div>
+            <div id="albums-with-max-images"></div>
+        </div>
 
-                <div class="col-md-8 col-lg-10 grid" id="main">
-                    <div class="grid-item">...</div>
-                </div>
-            </div>
+        <div class="col-md-8 col-lg-10 grid" id="images">
+            <div class="grid-item">...</div>
         </div>
     </script>
 
     <script id="template-albumItemView" type="text/template">
-        <li>t</li>
+        <a href="#" onclick="window.app.controller.renderImages(<%= id %>, 1)"><%= name %></a>
     </script>
 
-    <script id="template-albumListCollectionView" type="text/template">
-        <ul></ul>
+    <script id="template-imageItemView" type="text/template">
+        <a href="#" onclick="window.app.controller.renderImages(<%= id %>, 1)"><%= filename %></a>
     </script>
 {% endblock %}
