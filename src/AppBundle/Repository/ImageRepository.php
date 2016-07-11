@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class ImageRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function queryAllByAlbum($albumId)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i.id, i.filename, i.description FROM AppBundle:Image i
+                 WHERE i.album = :albumId
+                 ORDER BY i.filename ASC'
+            )
+            ->setParameter('albumId', $albumId)
+        ;
+    }
 }

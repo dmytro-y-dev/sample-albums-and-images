@@ -10,22 +10,37 @@ namespace AppBundle\Repository;
  */
 class AlbumRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAll()
+    public function findAllWithoutQueryingImages()
     {
         return $this->getEntityManager()
-            ->getRepository('AppBundle:Album')
-            ->findBy(array(), array('name' => 'ASC'));
+            ->createQuery(
+                'SELECT a.id, a.name FROM AppBundle:Album a ORDER BY a.name ASC'
+            )
+            ->getResult()
+        ;
+    }
+
+    public function findOneWithoutQueryingImages($id)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT a.id, a.name FROM AppBundle:Album a WHERE a.id = :id ORDER BY a.name ASC'
+            )
+            ->setParameter('id', $id)
+            ->getSingleResult()
+        ;
     }
 
     public function findAllWithMaxImages($maxImagesCount)
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT a FROM AppBundle:Album a LEFT JOIN AppBundle:Image i
+                'SELECT a.id, a.name FROM AppBundle:Album a LEFT JOIN AppBundle:Image i WITH i.album = a
                  GROUP BY a.id HAVING COUNT(i.id) < :maxImagesCount
                  ORDER BY a.name ASC'
             )
             ->setParameter('maxImagesCount', $maxImagesCount)
-            ->getResult();
+            ->getResult()
+        ;
     }
 }

@@ -18,14 +18,15 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/import-fixture", name="import_fixture")
+     * @Route("/api/import-fixture", name="import_fixture")
      */
     public function importFixtureAction(Request $request)
     {
+        $albumFixtureImporter = $this->get("app.album_fixture_importer");
+
         $fixtureJSONPath = "../src/AppBundle/Resources/fixture/json/albums.json";
         $fixtureJSON = file_get_contents($fixtureJSONPath);
 
-        $albumFixtureImporter = $this->get("app.album_fixture_importer");
         $albums = $albumFixtureImporter->loadAlbumsFromJSON($fixtureJSON);
 
         foreach ($albums as $album) {
