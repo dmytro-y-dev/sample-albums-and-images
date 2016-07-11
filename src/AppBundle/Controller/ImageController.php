@@ -31,6 +31,8 @@ class ImageController extends Controller
      */
     public function getPaginatedImagesAction($albumId, $pageId)
     {
+        $maxImagesPerPage = $this->getParameter('app.max_images_per_page');
+
         $em = $this->getDoctrine()->getManager();
 
         $imagesQuery = $em
@@ -42,8 +44,10 @@ class ImageController extends Controller
         $pagination = $paginator->paginate(
             $imagesQuery,
             !empty($pageId) ? $pageId : 1,
-            10
+            $maxImagesPerPage
         );
+
+        var_dump($pagination);
 
         $jsonContent = $this->serializer->serialize($pagination, 'json');
 

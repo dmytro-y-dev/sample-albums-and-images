@@ -78,3 +78,6 @@ stof_doctrine_extensions:
     orm:
         default:
             uploadable: true
+
+app:
+    max_images_per_page: 10

@@ -22,6 +22,8 @@ class AppExtension extends Extension
     $configuration = new Configuration();
     $config = $this->processConfiguration($configuration, $configs);
 
+    $container->setParameter('app.max_images_per_page', $config['max_images_per_page']);
+
     $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
     $loader->load('services.yml');
   }

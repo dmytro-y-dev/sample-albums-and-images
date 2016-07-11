@@ -24,7 +24,7 @@ class DefaultController extends Controller
     {
         $albumFixtureImporter = $this->get("app.album_fixture_importer");
 
-        $fixtureJSONPath = "../src/AppBundle/Resources/fixture/json/albums.json";
+        $fixtureJSONPath = "../contrib/fixture/json/albums.json";
         $fixtureJSON = file_get_contents($fixtureJSONPath);
 
         $albums = $albumFixtureImporter->loadAlbumsFromJSON($fixtureJSON);
