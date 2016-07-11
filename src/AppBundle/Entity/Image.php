@@ -10,12 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
- * @Gedmo\Uploadable(
- *     allowOverwrite=false,
- *     appendNumber=true,
- *     filenameGenerator="ALPHANUMERIC",
- *     path="storage/images"
- * )
+ * @Gedmo\Uploadable(allowOverwrite=false, appendNumber=true, filenameGenerator="\AppBundle\FilenameGenerator\ImageFilenameGenerator", path="storage/images")
  */
 class Image
 {
@@ -50,6 +45,13 @@ class Image
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="created", type="datetime")
+     */
+    private $created;
 
     /**
      * @ORM\ManyToOne(targetEntity="Album", inversedBy="images")
@@ -162,5 +164,29 @@ class Image
     public function getAlbum()
     {
         return $this->album;
+    }
+
+    /**
+     * Set creation date
+     *
+     * @param \DateTime $created
+     *
+     * @return Image
+     */
+    public function setCreated(\DateTime $created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get creation date
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 }

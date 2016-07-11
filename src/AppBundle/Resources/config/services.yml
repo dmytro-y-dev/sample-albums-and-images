@@ -1,0 +1,7 @@
+services:
+    app.album_fixture_importer:
+        class: AppBundle\FixtureImporter\AlbumFixtureImporter
+        arguments:
+            - @doctrine.orm.entity_manager
+            - "%stof_doctrine_extensions.default_file_path%/images"
+            - "%kernel.root_dir%/../src/AppBundle/Resources/fixture/images"

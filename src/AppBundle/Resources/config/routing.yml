@@ -1,0 +1,8 @@
+articles:
+    type: rest
+    resource: AppBundle\Controller\ArticleController
+
+images:
+    type: rest
+    parent: articles
+    resource: AppBundle\Controller\ImageController
