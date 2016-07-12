@@ -8,12 +8,23 @@ App.RootLayout = Backbone.Marionette.LayoutView.extend
     albums : '#albums'
     albumsWithMaxImages : '#albums-with-max-images'
     images : '#images'
+    pagination : '#pagination'
 
-  showAlbums : (albums) ->
-    this.albums.show(new App.AlbumsListView(albums))
+  renderAlbums : (albums) ->
+    this.albums.show(new App.AlbumsListView(
+      collection : albums
+    ))
 
-  showAlbumsWithMaxImages : (albums) ->
-    this.albumsWithMaxImages.show(new App.AlbumsListView(albums))
+  renderAlbumsWithMaxImages : (albums) ->
+    this.albumsWithMaxImages.show(new App.AlbumsListView(
+      collection : albums
+    ))
 
-  showImages : (images) ->
-    this.images.show(new App.ImagesListView(images))
+  renderImages : (images) ->
+    this.images.show(new App.ImagesListView(
+      collection : images
+    ))
+
+  renderPagination : (pagination) ->
+    console.log pagination
+    # do nothing

@@ -1,0 +1,8 @@
+albums:
+    type: rest
+    resource: AppBundle\Controller\AlbumController
+
+images:
+    type: rest
+    parent: albums
+    resource: AppBundle\Controller\ImageController

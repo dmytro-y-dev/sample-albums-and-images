@@ -10,9 +10,11 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use FOS\RestBundle\Controller\Annotations\Prefix;
+use FOS\RestBundle\Controller\Annotations\NamePrefix;
 
 /**
  * @Prefix("api")
+ * @NamePrefix("app_api_")
  */
 class AlbumController extends Controller
 {
@@ -64,9 +66,6 @@ class AlbumController extends Controller
         return new Response($jsonContent);
     }
 
-    /**
-     * @Route("/api/albums/filter-max-images/{maxImagesCount}", name="app_albums_with_max_images")
-     */
     public function getAlbumsWithMaxImagesAction($maxImagesCount)
     {
         $em = $this->getDoctrine()->getManager();

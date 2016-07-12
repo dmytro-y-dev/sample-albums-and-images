@@ -3,44 +3,21 @@ App = App || {}
 App.Application = Backbone.Marionette.Application.extend
   albumMaxImagesCount : 10
 
-  createRootLayout : () ->
-    this.root = new App.RootLayout()
-    this.root.render()
-
-    this.controller.renderAlbums()
-    this.controller.renderAlbumsWithMaxImages()
-
   createController : () ->
-    this.controller = new App.Controller()
+    return new App.Controller()
 
-  createRouter : (controller) ->
-    controller.router = new Marionette.AppRouter
-      controller : controller
-      appRoutes:
-        "" : "albums"
-        "album/:id" : "imagesPaginatedFirstPage"
-        "album/:id/page/:page" : "imagesPaginatedSpecificPage"
+  onBeforeStart : () ->
+    # Create application main controller
 
-# Start application after DOM is complete
+    window.app.controller = this.createController();
 
-$(() ->
-  window.app = new App.Application()
-
-  window.app.on 'before:start', () ->
-    # Initialize application and Backbone stuff
-
-    window.app.createController();
-    window.app.createRouter(window.app.controller);
-
-    window.app.createRootLayout();
+    # Initialize Backbone routing
 
     Backbone.history.start();
 
-    # Initialize masonry grid
+# Start application after DOM is ready
 
-    $('.grid').masonry
-      itemSelector : '.grid-item',
-      columnWidth : 200
-
+$(() ->
+  window.app = new App.Application()
   window.app.start()
 )

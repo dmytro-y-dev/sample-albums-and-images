@@ -9,17 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/", name="homepage")
-     */
     public function indexAction(Request $request)
     {
         return $this->render('AppBundle:default:index.html.twig');
     }
 
-    /**
-     * @Route("/api/import-fixture", name="import_fixture")
-     */
     public function importFixtureAction(Request $request)
     {
         $albumFixtureImporter = $this->get("app.album_fixture_importer");

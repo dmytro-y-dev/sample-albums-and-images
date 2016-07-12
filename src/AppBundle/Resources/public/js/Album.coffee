@@ -5,7 +5,6 @@ App.Album = Backbone.Model.extend
     id : null
     name : ''
 
-
 App.AlbumsCollection = Backbone.Collection.extend
   model: App.Album
 

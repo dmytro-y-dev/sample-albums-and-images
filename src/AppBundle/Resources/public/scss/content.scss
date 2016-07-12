@@ -1,0 +1,20 @@
+.grid-item {
+  padding: 20px;
+  margin: 20px;
+  border: #eee solid 1px;
+  border-radius: 5px;
+  display: inline-block;
+
+  .image {
+    display: inline-block;
+    text-align: center;
+  }
+
+  img {
+    max-width: 200px;
+  }
+
+  .description {
+    padding-top: 20px;
+  }
+}

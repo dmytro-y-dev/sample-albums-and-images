@@ -1,8 +1,19 @@
-albums:
-    type: rest
-    resource: AppBundle\Controller\AlbumController
+app_frontend_home:
+    path: /
+    defaults: { _controller: AppBundle:Default:index }
 
-images:
-    type: rest
-    parent: albums
-    resource: AppBundle\Controller\ImageController
+app_api_import_fixture:
+    path: /api/import-fixture
+    defaults: { _controller: AppBundle:Default:importFixture }
+
+app_api_albums_with_max_images:
+    path: /api/albums/filter-max-images/{maxImagesCount}
+    defaults: { _controller: AppBundle:Album:getAlbumsWithMaxImages }
+    options:
+        expose: true
+
+app_api_images_paginated:
+    path: /api/albums/{albumId}/page/{pageId}
+    defaults: { _controller: AppBundle:Image:getPaginatedImages }
+    options:
+        expose: true

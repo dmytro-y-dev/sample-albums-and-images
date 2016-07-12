@@ -4,17 +4,19 @@
 
 {% block body %}
     <div class="container">
-        <div class="row" id="overall">
-        </div>
+        <div class="row" id="overall"></div>
     </div>
 {% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" type="text/css" />
+
     <link rel="stylesheet" href="{{ asset('bundles/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('bundles/bootstrap/css/bootstrap-theme.min.css') }}" type="text/css" />
-    <!--<link rel="stylesheet" href="{{ asset('bundles/app/bootstrap-theme.min.css') }}" type="text/css" />-->
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/scss/content.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/scss/grid.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/scss/theme.min.css') }}" type="text/css" />
 {% endblock %}
 
 {% block javascripts %}
@@ -24,6 +26,10 @@
     <script type="text/javascript" src="{{ asset('bundles/marionette/backbone.marionette.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/bootstrap/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/masonry/masonry.pkgd.min.js') }}"></script>
+    <script src="https://npmcdn.com/imagesloaded@4.1.0/imagesloaded.pkgd.min.js"></script>
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
     <script type="text/javascript" src="{{ asset('bundles/app/js/Album.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/Image.min.js') }}"></script>
@@ -37,16 +43,26 @@
             <div id="albums-with-max-images"></div>
         </div>
 
-        <div class="col-md-8 col-lg-10 grid" id="images">
-            <div class="grid-item">...</div>
+        <div class="col-md-8 col-lg-10" id="main">
+            <div id="images"></div>
+            <div id="pagination"></div>
         </div>
     </script>
 
     <script id="template-albumItemView" type="text/template">
-        <a href="#" onclick="window.app.controller.renderImages(<%= id %>, 1)"><%= name %></a>
+        <a href="#album/<%= id %>"><%= name %></a>
     </script>
 
     <script id="template-imageItemView" type="text/template">
-        <a href="#" onclick="window.app.controller.renderImages(<%= id %>, 1)"><%= filename %></a>
+        <div class="image">
+            <img src="{{ asset('storage/images/') }}<%= filename %>" />
+        </div>
+
+        <div class="description">
+            <%= description %>
+        </div>
+    </script>
+
+    <script id="template-pagination" type="text/template">
     </script>
 {% endblock %}

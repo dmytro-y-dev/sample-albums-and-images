@@ -10,9 +10,11 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use FOS\RestBundle\Controller\Annotations\Prefix;
+use FOS\RestBundle\Controller\Annotations\NamePrefix;
 
 /**
  * @Prefix("api")
+ * @NamePrefix("app_api_")
  */
 class ImageController extends Controller
 {
@@ -26,9 +28,6 @@ class ImageController extends Controller
         $this->serializer = new Serializer($normalizers, $encoders);
     }
 
-    /**
-     * @Route("/api/albums/{albumId}/page/{pageId}", name="app_images_paginated")
-     */
     public function getPaginatedImagesAction($albumId, $pageId)
     {
         $maxImagesPerPage = $this->getParameter('app.max_images_per_page');
@@ -47,9 +46,12 @@ class ImageController extends Controller
             $maxImagesPerPage
         );
 
-        var_dump($pagination);
+        $imagesPage = array(
+            'pagination' => $pagination->getPaginationData(),
+            'images' => $pagination->getItems()
+        );
 
-        $jsonContent = $this->serializer->serialize($pagination, 'json');
+        $jsonContent = $this->serializer->serialize($imagesPage, 'json');
 
         return new Response($jsonContent);
     }
