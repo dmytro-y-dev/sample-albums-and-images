@@ -1,8 +1,12 @@
 albums:
     type: rest
     resource: AppBundle\Controller\AlbumController
+    prefix: api
+    name_prefix: app_api_
 
 images:
     type: rest
     parent: albums
     resource: AppBundle\Controller\ImageController
+    prefix: api
+    name_prefix: app_api_

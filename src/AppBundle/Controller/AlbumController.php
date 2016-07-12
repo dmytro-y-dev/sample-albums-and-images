@@ -9,13 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use FOS\RestBundle\Controller\Annotations\Prefix;
-use FOS\RestBundle\Controller\Annotations\NamePrefix;
 
-/**
- * @Prefix("api")
- * @NamePrefix("app_api_")
- */
 class AlbumController extends Controller
 {
     private $serializer;
