@@ -14,13 +14,17 @@ App.Application = Backbone.Marionette.Application.extend
 
     # Initialize Backbone routing
 
+    websiteRoot = this.websiteRoot
+
     $(document).on 'click', 'a', (event) ->
       href = ''
 
-      if ($(this).attr('href').substring(0, window.app.websiteRoot.length) == window.app.websiteRoot)
-        href = $(this).attr('href').substring(window.app.websiteRoot.length)
+      if ($(this).attr('href').substring(0, websiteRoot.length) == websiteRoot)
+        href = $(this).attr('href').substring(websiteRoot.length)
 
       fragment = Backbone.history.getFragment(href);
+      console.log href
+      console.log fragment
       matched = _.any Backbone.history.handlers, (handler) ->
         return handler.route.test(fragment)
 
@@ -28,7 +32,7 @@ App.Application = Backbone.Marionette.Application.extend
         event.preventDefault()
         Backbone.history.navigate(fragment, { trigger: true })
 
-    Backbone.history.start({pushState : true, hashChange: false, root: window.app.websiteRoot});
+    Backbone.history.start({pushState : true, hashChange: false, root: websiteRoot});
 
 # Start application after DOM is ready
 

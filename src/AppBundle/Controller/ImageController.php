@@ -26,12 +26,16 @@ class ImageController extends Controller
         );
 
         $paginationHtml = $this->render(
-            'AppBundle:pagination:pagination.html.twig',
+            $pagination->getTemplate(),
             array_merge(
                 $pagination->getPaginationData(),
                 array(
-                    'route' => 'app_frontend_home',
-                    'albumId' => $albumId
+                    'route' => 'app_frontend_paginated_images',
+                    'query' => array(
+                        'id' => $albumId,
+                        'page' => $pageId,
+                    ),
+                    'pageParameterName' => 'page'
                 )
             )
         )->getContent();
