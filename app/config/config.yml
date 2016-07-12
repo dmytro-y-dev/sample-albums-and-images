@@ -81,3 +81,7 @@ stof_doctrine_extensions:
 
 app:
     max_images_per_page: 10
+
+knp_paginator:
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # sliding pagination controls template

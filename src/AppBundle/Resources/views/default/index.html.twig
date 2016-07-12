@@ -3,20 +3,18 @@
 {% block title %}Homepage{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row" id="overall"></div>
-    </div>
+    <div id="overall"></div>
 {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" type="text/css" />
 
     <link rel="stylesheet" href="{{ asset('bundles/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('bundles/bootstrap/css/bootstrap-theme.min.css') }}" type="text/css" />
 
-    <link rel="stylesheet" href="{{ asset('bundles/app/css/content.min.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('bundles/app/css/grid.min.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('bundles/app/css/theme.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/reset.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/images.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/pagination.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/albums.min.css') }}" type="text/css" />
 {% endblock %}
 
 {% block javascripts %}
@@ -38,16 +36,31 @@
     <script type="text/javascript" src="{{ asset('bundles/app/js/Application.min.js') }}"></script>
 
     <script id="template-rootLayoutView" type="text/template">
-        <div class="col-md-4 col-lg-2" id="sidebar">
-            <div id="albums"></div>
-            <div id="albums-with-max-images"></div>
-        </div>
+        <section id="albums-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6" id="albums-wrapper">
+                        <h1>Albums</h1>
+                        <div id="albums"></div>
+                    </div>
 
-        <div class="col-md-8 col-lg-10" id="main">
-            <div id="pagination-top" class="pagination"></div>
-            <div id="images"></div>
-            <div id="pagination-bottom" class="pagination"></div>
-        </div>
+                    <div class="col-sm-6" id="albums-with-max-images-wrapper">
+                        <h1>Albums with max <%= window.app.albumMaxImagesCount %> images</h1>
+                        <div id="albums-with-max-images"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="images-content">
+            <div class="container">
+                <div class="row">
+                    <div id="pagination-top" class="pagination"></div>
+                    <div id="images"></div>
+                    <div id="pagination-bottom" class="pagination"></div>
+                </div>
+            </div>
+        </section>
     </script>
 
     <script id="template-albumItemView" type="text/template">
@@ -62,5 +75,13 @@
         <div class="description">
             <%= description %>
         </div>
+    </script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
     </script>
 {% endblock %}
