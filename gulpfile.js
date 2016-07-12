@@ -55,7 +55,7 @@ gulp.task('install-underscore', function() {
 gulp.task('install-app', ['compile-sass-app', 'compile-coffee-app'], function() {});
 
 gulp.task('compile-coffee-app', function() {
-    gulp.src('src/AppBundle/Resources/js/*.coffee')
+    gulp.src('src/AppBundle/Resources/coffee/*.coffee')
         .pipe(sourcemaps.init())
         .pipe(coffee({bare: true}).on('error', gutil.log))
         .pipe(uglify())
@@ -65,7 +65,7 @@ gulp.task('compile-coffee-app', function() {
 });
 
 gulp.task('compile-sass-app', function() {
-    gulp.src('src/AppBundle/Resources/css/*.scss')
+    gulp.src('src/AppBundle/Resources/scss/*.scss')
         .pipe(sourcemaps.init())
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(rename({extname: ".min.css"}))
