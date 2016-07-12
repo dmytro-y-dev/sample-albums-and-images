@@ -55,25 +55,25 @@ gulp.task('install-underscore', function() {
 gulp.task('install-app', ['compile-sass-app', 'compile-coffee-app'], function() {});
 
 gulp.task('compile-coffee-app', function() {
-    gulp.src('src/AppBundle/Resources/public/**/*.coffee')
+    gulp.src('src/AppBundle/Resources/js/*.coffee')
         .pipe(sourcemaps.init())
         .pipe(coffee({bare: true}).on('error', gutil.log))
         .pipe(uglify())
         .pipe(rename({extname: ".min.js"}))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('web/bundles/app'));
+        .pipe(gulp.dest('web/bundles/app/js'));
 });
 
 gulp.task('compile-sass-app', function() {
-    gulp.src('src/AppBundle/Resources/public/**/*.scss')
+    gulp.src('src/AppBundle/Resources/css/*.scss')
         .pipe(sourcemaps.init())
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(rename({extname: ".min.css"}))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('web/bundles/app'));
+        .pipe(gulp.dest('web/bundles/app/css'));
 });
 
 gulp.task('app:watch', function () {
-    gulp.watch('src/AppBundle/Resources/public/**/*.coffee', ['compile-coffee-app']);
-    gulp.watch('src/AppBundle/Resources/public/**/*.scss', ['compile-sass-app']);
+    gulp.watch('src/AppBundle/Resources/js/*.coffee', ['compile-coffee-app']);
+    gulp.watch('src/AppBundle/Resources/css/*.scss', ['compile-sass-app']);
 });
