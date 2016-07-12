@@ -9,8 +9,8 @@ App.Controller = Marionette.Controller.extend
       controller : this
       appRoutes:
         "" : "routeAlbums"
-        "album/:id" : "routeImagesPaginatedFirstPage"
-        "album/:id/page/:page" : "routeImagesPaginatedSpecificPage"
+        "/album/:id" : "routeImagesPaginatedFirstPage"
+        "/album/:id/page/:page" : "routeImagesPaginatedSpecificPage"
 
     this.initializeSidebar =_.once this.refreshSidebar
 
