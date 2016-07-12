@@ -4,24 +4,12 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class ImageController extends Controller
 {
-    private $serializer;
-
-    public function __construct()
-    {
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-
-        $this->serializer = new Serializer($normalizers, $encoders);
-    }
-
     public function getPaginatedImagesAction($albumId, $pageId)
     {
         $maxImagesPerPage = $this->getParameter('app.max_images_per_page');
@@ -40,23 +28,20 @@ class ImageController extends Controller
             $maxImagesPerPage
         );
 
-        $paginationHTML = $this->render(
+        $paginationHtml = $this->render(
             'AppBundle:default:pagination.html.twig',
             array_merge(
-                $pagination->getPaginationData(), array(
+                $pagination->getPaginationData(),
+                array(
                     'route' => 'app_frontend_home',
                     'albumId' => $albumId
                 )
             )
         )->getContent();
 
-        $imagesPage = array(
-            'pagination' => $paginationHTML,
+        return new JsonResponse(array(
+            'pagination' => $paginationHtml,
             'images' => $pagination->getItems()
-        );
-
-        $jsonContent = $this->serializer->serialize($imagesPage, 'json');
-
-        return new Response($jsonContent);
+        ));
     }
 }

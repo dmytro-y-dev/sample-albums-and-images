@@ -69,17 +69,26 @@ class AlbumFixtureImporter
 
     public function copyImageFileToStorage(\AppBundle\Entity\Image $image)
     {
-        $originalFilename = substr($image->getFilename(), 0, strpos($image->getFilename(), '.')); // part of filename before .
-        $originalExtension = substr($image->getFilename(), strpos($image->getFilename(), '.'));  // part of filename after .
+        $originalFilename = $image->getFilename();
 
-        $newFilename = ImageFilenameGenerator::generate($originalFilename, $originalExtension, $image);  // full filename with extension
+        $originalFilenameWithoutExtension = substr(
+            $image->getFilename(), 0, strpos($image->getFilename(), '.')
+        ); // part of filename before .
 
-        $image->setFilename($newFilename);
+        $originalExtension = substr(
+            $image->getFilename(), strpos($image->getFilename(), '.')
+        ); // part of filename after . including dot symbol
+
+        $newFilename = ImageFilenameGenerator::generate(
+            $originalFilenameWithoutExtension, $originalExtension, $image
+        ); // newly generated full filename with extension
 
         copy(
-            $this->imageFixtureFilesPath.'/'.$originalFilename.$originalExtension,
+            $this->imageFixtureFilesPath.'/'.$originalFilename,
             $this->imageStoragePath.'/'.$newFilename
         );
+
+        $image->setFilename($newFilename);
 
         return $newFilename;
     }

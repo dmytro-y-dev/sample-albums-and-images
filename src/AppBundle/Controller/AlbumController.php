@@ -4,24 +4,12 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class AlbumController extends Controller
 {
-    private $serializer;
-
-    public function __construct()
-    {
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-
-        $this->serializer = new Serializer($normalizers, $encoders);
-    }
-
     public function getAlbumAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -41,23 +29,19 @@ class AlbumController extends Controller
             ->getResult()
         ;
 
-        $jsonContent = $this->serializer->serialize($album, 'json');
-
-        return new Response($jsonContent);
+        return new JsonResponse($album);
     }
 
     public function getAlbumsAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $album = $em
+        $albums = $em
             ->getRepository('AppBundle:Album')
             ->findAllWithoutQueryingImages()
         ;
 
-        $jsonContent = $this->serializer->serialize($album, 'json');
-
-        return new Response($jsonContent);
+        return new JsonResponse($albums);
     }
 
     public function getAlbumsWithMaxImagesAction($maxImagesCount)
@@ -69,8 +53,6 @@ class AlbumController extends Controller
             ->findAllWithMaxImages($maxImagesCount)
         ;
 
-        $jsonContent = $this->serializer->serialize($albums, 'json');
-
-        return new Response($jsonContent);
+        return new JsonResponse($albums);
     }
 }
