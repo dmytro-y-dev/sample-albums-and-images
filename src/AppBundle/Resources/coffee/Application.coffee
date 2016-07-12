@@ -17,14 +17,11 @@ App.Application = Backbone.Marionette.Application.extend
     websiteRoot = this.websiteRoot
 
     $(document).on 'click', 'a', (event) ->
-      href = ''
+      fragment = ''
 
       if ($(this).attr('href').substring(0, websiteRoot.length) == websiteRoot)
-        href = $(this).attr('href').substring(websiteRoot.length)
+        fragment = $(this).attr('href').substring(websiteRoot.length)
 
-      fragment = Backbone.history.getFragment(href);
-      console.log href
-      console.log fragment
       matched = _.any Backbone.history.handlers, (handler) ->
         return handler.route.test(fragment)
 
