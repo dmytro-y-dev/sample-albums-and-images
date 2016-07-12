@@ -6,6 +6,10 @@ app_api_import_fixture:
     path: /api/import-fixture
     defaults: { _controller: AppBundle:Default:importFixture }
 
+app_api_truncate_database:
+    path: /api/truncate_database
+    defaults: { _controller: AppBundle:Default:truncateDatabase }
+
 app_api_albums_with_max_images:
     path: /api/albums/filter-max-images/{maxImagesCount}
     defaults: { _controller: AppBundle:Album:getAlbumsWithMaxImages }

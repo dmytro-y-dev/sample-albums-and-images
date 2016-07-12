@@ -29,4 +29,20 @@ class DefaultController extends Controller
 
         return new Response('done.');
     }
+
+    public function truncateDatabaseAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->createQuery('DELETE i FROM AppBundle:Image i')
+            ->getSingleResult();
+        $em->createQuery('DELETE a FROM AppBundle:Album a')
+            ->getSingleResult();
+
+        foreach(glob("../web/storage/images/*") as $file) {
+            unlink($file);
+        }
+
+        return new Response('done.');
+    }
 }

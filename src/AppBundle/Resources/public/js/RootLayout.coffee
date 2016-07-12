@@ -25,5 +25,4 @@ App.RootLayout = Backbone.Marionette.LayoutView.extend
     ))
 
   renderPagination : (pagination) ->
-    $(".pagination").html(pagination);
-    # do nothing
+    $(".pagination").html pagination

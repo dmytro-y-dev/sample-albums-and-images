@@ -8,26 +8,28 @@ App.Controller = Marionette.Controller.extend
     this.router = new Marionette.AppRouter
       controller : this
       appRoutes:
-        "" : "albums"
-        "album/:id" : "imagesPaginatedFirstPage"
-        "album/:id/page/:page" : "imagesPaginatedSpecificPage"
+        "" : "routeAlbums"
+        "album/:id" : "routeImagesPaginatedFirstPage"
+        "album/:id/page/:page" : "routeImagesPaginatedSpecificPage"
 
-  albums: () ->
+    this.initializeSidebar =_.once this.refreshSidebar
+
+  routeAlbums: () ->
     this.initializeSidebar()
 
-  imagesPaginatedFirstPage: (id) ->
+  routeImagesPaginatedFirstPage: (id) ->
     this.initializeSidebar()
-    this.initializeMain(id, 1)
+    this.refreshMain(id, 1)
 
-  imagesPaginatedSpecificPage: (id, page) ->
+  routeImagesPaginatedSpecificPage: (id, page) ->
     this.initializeSidebar()
-    this.initializeMain(id, page)
+    this.refreshMain(id, page)
 
-  initializeSidebar : () ->
+  refreshSidebar : () ->
     this.fetchAlbums()
     this.fetchAlbumsWithMaxImages()
 
-  initializeMain : (id, page) ->
+  refreshMain : (id, page) ->
     this.fetchPaginatedImages(id, page);
 
   fetchAlbums : () ->
