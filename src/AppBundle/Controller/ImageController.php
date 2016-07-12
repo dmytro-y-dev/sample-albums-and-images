@@ -26,7 +26,7 @@ class ImageController extends Controller
         );
 
         $paginationHtml = $this->render(
-            'AppBundle:default:pagination.html.twig',
+            'AppBundle:pagination:pagination.html.twig',
             array_merge(
                 $pagination->getPaginationData(),
                 array(
