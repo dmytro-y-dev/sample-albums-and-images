@@ -5,6 +5,10 @@ App.Album = Backbone.Model.extend
     id : null
     name : ''
 
+    getAlbumDetailsUrl : () ->
+      return Routing.generate 'app_frontend_album',
+        'id' : this.id
+
 App.AlbumsCollection = Backbone.Collection.extend
   model : App.Album
 

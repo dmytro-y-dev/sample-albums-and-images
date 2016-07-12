@@ -14,9 +14,6 @@ App.Application = Backbone.Marionette.Application.extend
 
     # Initialize Backbone routing
 
-    if (window.navigator.standalone != true)
-      $('body').addClass('no-standalone')
-
     $(document).on 'click', 'a', (event) ->
       href = ''
 

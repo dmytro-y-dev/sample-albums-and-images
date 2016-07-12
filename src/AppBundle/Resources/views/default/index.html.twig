@@ -51,7 +51,7 @@
     </script>
 
     <script id="template-albumItemView" type="text/template">
-        <a href="{{ path('app_frontend_home') }}album/<%= id %>"><%= name %></a>
+        <a href="<%= getAlbumDetailsUrl() %>"><%= name %></a>
     </script>
 
     <script id="template-imageItemView" type="text/template">

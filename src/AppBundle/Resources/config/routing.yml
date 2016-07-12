@@ -7,10 +7,14 @@ app_frontend_home:
 app_frontend_album:
     path: /album/{id}
     defaults: { _controller: AppBundle:Default:index }
+    options:
+        expose: true
 
 app_frontend_paginated_images:
     path: /album/{id}/page/{page}
     defaults: { _controller: AppBundle:Default:index }
+    options:
+        expose: true
 
 app_api_import_fixture:
     path: /api/import-fixture
