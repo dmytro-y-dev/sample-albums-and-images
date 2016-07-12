@@ -1,7 +1,7 @@
 App = App || {}
 
 App.Controller = Marionette.Controller.extend
-  initialize: () ->
+  initialize : () ->
     this.rootLayout = new App.RootLayout()
     this.rootLayout.render()
 
@@ -14,14 +14,14 @@ App.Controller = Marionette.Controller.extend
 
     this.initializeSidebar =_.once this.refreshSidebar
 
-  routeAlbums: () ->
+  routeAlbums : () ->
     this.initializeSidebar()
 
-  routeImagesPaginatedFirstPage: (id) ->
+  routeImagesPaginatedFirstPage : (id) ->
     this.initializeSidebar()
     this.refreshMain(id, 1)
 
-  routeImagesPaginatedSpecificPage: (id, page) ->
+  routeImagesPaginatedSpecificPage : (id, page) ->
     this.initializeSidebar()
     this.refreshMain(id, page)
 
