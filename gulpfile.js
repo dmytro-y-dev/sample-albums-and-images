@@ -74,6 +74,6 @@ gulp.task('compile-sass-app', function() {
 });
 
 gulp.task('app:watch', function () {
-    gulp.watch('src/AppBundle/Resources/js/*.coffee', ['compile-coffee-app']);
-    gulp.watch('src/AppBundle/Resources/css/*.scss', ['compile-sass-app']);
+    gulp.watch('src/AppBundle/Resources/coffee/*.coffee', ['compile-coffee-app']);
+    gulp.watch('src/AppBundle/Resources/scss/*.scss', ['compile-sass-app']);
 });
