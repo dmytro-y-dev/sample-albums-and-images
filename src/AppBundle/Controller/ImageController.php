@@ -46,8 +46,18 @@ class ImageController extends Controller
             $maxImagesPerPage
         );
 
+        $paginationHTML = $this->render(
+            'AppBundle:default:pagination.html.twig',
+            array_merge(
+                $pagination->getPaginationData(), array(
+                    'route' => 'app_frontend_home',
+                    'albumId' => $albumId
+                )
+            )
+        )->getContent();
+
         $imagesPage = array(
-            'pagination' => $pagination->getPaginationData(),
+            'pagination' => $paginationHTML,
             'images' => $pagination->getItems()
         );
 
