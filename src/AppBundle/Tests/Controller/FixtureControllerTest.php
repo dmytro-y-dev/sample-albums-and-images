@@ -2,7 +2,7 @@
 
 namespace AppBundle\Tests\Controller;
 
-use AppBundle\FixtureHandler\DefaultFixtureHandler;
+use AppBundle\FixtureCleaner\DefaultFixtureCleaner;
 use AppBundle\FixtureImporter\DefaultFixtureImporter;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -17,30 +17,19 @@ class FixtureControllerTest extends WebTestCase
     {
         // Initialize SUT object $controller and configure mock expectations
 
-        $em = $this->getMockBuilder(EntityManager::class)
+        $fixtureImporter = $this->getMockBuilder(DefaultFixtureImporter::class)
+            ->setMethods(array('importAlbums'))
             ->disableOriginalConstructor()
             ->getMock();
 
-        $fixtureHandler = $this->getMockBuilder(DefaultFixtureHandler::class)
-            ->setMethods(array('readFixtureJSON'))
-            ->setConstructorArgs(array($em, $this->imageStoragePath, $this->fixturesPath))
-            ->getMock();
-
-        $fixtureHandler->method('readFixtureJSON')->willReturn('{}');
-
-        $fixtureHandler->expects($this->once())
-            ->method('readFixtureJSON')
+        $fixtureImporter->expects($this->once())
+            ->method('importAlbums')
             ->withAnyParameters();
 
-        $fixtureImporter = $this->getMockBuilder(DefaultFixtureImporter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $controller = $this->getMockBuilder(FixtureController::class)
-            ->setMethods(array('getFixtureHandler', 'get'))
+            ->setMethods(array('get'))
             ->getMock();
 
-        $controller->method('getFixtureHandler')->willReturn($fixtureHandler);
         $controller->method('get')->willReturn($fixtureImporter);
 
         $controller->expects($this->once())
@@ -62,52 +51,33 @@ class FixtureControllerTest extends WebTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $fixtureHandler = $this->getMockBuilder(DefaultFixtureHandler::class)
+        $fixtureCleaner = $this->getMockBuilder(DefaultFixtureCleaner::class)
             ->setMethods(array('cleanDatabase', 'cleanFilesStorage'))
             ->setConstructorArgs(array($em, $this->imageStoragePath, $this->fixturesPath))
             ->getMock();
 
-        $fixtureHandler->expects($this->once())
+        $fixtureCleaner->expects($this->once())
             ->method('cleanDatabase')
             ->withAnyParameters();
 
-        $fixtureHandler->expects($this->once())
+        $fixtureCleaner->expects($this->once())
             ->method('cleanFilesStorage')
             ->withAnyParameters();
 
         $controller = $this->getMockBuilder(FixtureController::class)
-            ->setMethods(array('getFixtureHandler'))
+            ->setMethods(array('get'))
             ->getMock();
 
-        $controller->method('getFixtureHandler')->willReturn($fixtureHandler);
+        $controller->method('get')->willReturn($fixtureCleaner);
+
+        $controller->expects($this->once())
+            ->method('get')
+            ->with('app.default_fixture_cleaner');
 
         // Execute expected code
 
         $response = $controller->truncateDatabaseAction();
 
         $this->assertEquals('done.', $response->getContent());
-    }
-
-    public function testGetFixtureHandler()
-    {
-        // Initialize SUT object $controller and configure mock expectations
-
-        $fixtureHandler = $this->getMockBuilder(DefaultFixtureHandler::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $controller = $this->getMockBuilder(FixtureController::class)
-            ->setMethods(array('get'))
-            ->getMock();
-
-        $controller->method('get')->willReturn($fixtureHandler);
-
-        $controller->expects($this->once())
-            ->method('get')
-            ->with('app.default_fixture_handler');
-
-        // Execute expected code
-
-        $this->assertEquals($fixtureHandler, $controller->getFixtureHandler());
     }
 }

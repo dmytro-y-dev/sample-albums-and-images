@@ -20,13 +20,9 @@ class FixtureController extends Controller
      */
     public function importFixtureAction()
     {
-        $fixtureHandler = $this->getFixtureHandler();
-
         $this
             ->get('app.default_fixture_importer')
-            ->importFixtureFromJSON(
-                $fixtureHandler->readFixtureJSON()
-            )
+            ->importAlbums()
         ;
 
         return new Response('done.');
@@ -39,21 +35,11 @@ class FixtureController extends Controller
      */
     public function truncateDatabaseAction()
     {
-        $fixtureHandler = $this->getFixtureHandler();
+        $fixtureCleaner =  $this->get('app.default_fixture_cleaner');
 
-        $fixtureHandler->cleanDatabase();
-        $fixtureHandler->cleanFilesStorage();
+        $fixtureCleaner->cleanDatabase();
+        $fixtureCleaner->cleanFilesStorage();
 
         return new Response('done.');
-    }
-
-    /*
-     * Get DefaultFixtureHandler service.
-     *
-     * @return \AppBundle\FixtureHandler\DefaultFixtureHandler
-     */
-    public function getFixtureHandler()
-    {
-        return $this->get('app.default_fixture_handler');
     }
 }

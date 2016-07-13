@@ -4,7 +4,6 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "%stof_doctrine_extensions.default_file_path%/images"
-            - "%app.fixtures_path%"
 
     app.default_fixture_handler:
         class: AppBundle\FixtureHandler\DefaultFixtureHandler

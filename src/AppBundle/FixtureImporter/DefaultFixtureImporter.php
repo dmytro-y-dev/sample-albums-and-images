@@ -33,17 +33,30 @@ class DefaultFixtureImporter
     }
 
     /**
-     * Import fixtures data from JSON string.
-     *
-     * @param string $fixtureJSON Albums fixtures as JSON string
+     * Import fixtures data onto website from location, which was specified in constructor.
      */
-    public function importFixtureFromJSON($fixtureJSON)
+    public function importAlbums()
     {
-        $albums = $this->deserializeAlbums($fixtureJSON);
+        $albums = $this->deserializeAlbums(
+            $this->readAlbumsJSON()
+        );
 
         foreach ($albums as $album) {
             $this->importAlbum($album);
         }
+    }
+
+    /**
+     * Read JSON string with fixtures data from default location.
+     *
+     * @return string
+     */
+    public function readAlbumsJSON()
+    {
+        $fixtureJSONPath = "{$this->fixturesPath}/json/albums.json";
+        $fixtureJSON = @file_get_contents($fixtureJSONPath);
+
+        return $fixtureJSON;
     }
 
     /**

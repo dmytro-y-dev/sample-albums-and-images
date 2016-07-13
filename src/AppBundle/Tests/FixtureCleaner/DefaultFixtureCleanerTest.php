@@ -4,33 +4,17 @@ namespace AppBundle\Tests\FixtureImporter;
 
 use AppBundle\Entity\Album;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use AppBundle\FixtureHandler\DefaultFixtureHandler;
+use AppBundle\FixtureCleaner\DefaultFixtureCleaner;
 use AppBundle\FixtureImporter\DefaultFixtureImporter;
 use Doctrine\ORM\EntityManager;
 
 class DefaultFixtureHandlerTest extends WebTestCase
 {
     private $imageStoragePath = '';
-    private $fixturesPath = '';
-
-    public function testReadFixtureJSON()
-    {
-        // Initialize SUT object $fixtureHandler and configure mock expectations
-
-        $em = $this->getMockBuilder(EntityManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $fixtureHandler = new DefaultFixtureHandler($em, $this->imageStoragePath, $this->fixturesPath);
-
-        // Perform assertions
-
-        $this->assertEmpty($fixtureHandler->readFixtureJSON());
-    }
 
     public function testCleanDatabase()
     {
-        // Initialize SUT object $fixtureHandler and configure mock expectations
+        // Initialize SUT object $fixtureCleaner and configure mock expectations
 
         $em = $this->getMockBuilder(EntityManager::class)
             ->setMethods(array('createQuery'))
@@ -51,10 +35,10 @@ class DefaultFixtureHandlerTest extends WebTestCase
             ->method('createQuery')
             ->with($this->equalTo('DELETE FROM AppBundle:Album'));
 
-        $fixtureHandler = new DefaultFixtureHandler($em, $this->imageStoragePath, $this->fixturesPath);
+        $fixtureCleaner = new DefaultFixtureCleaner($em, $this->imageStoragePath);
 
         // Execute expected code
 
-        $fixtureHandler->cleanDatabase();
+        $fixtureCleaner->cleanDatabase();
     }
 }

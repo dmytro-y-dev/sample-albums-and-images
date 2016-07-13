@@ -1,17 +1,16 @@
 <?php
 
-namespace AppBundle\FixtureHandler;
+namespace AppBundle\FixtureCleaner;
 
 /**
- * Class DefaultFixtureHandler
+ * Class DefaultFixtureCleaner
  *
- * This service is responsible for locating and reading fixtures and for removal of imported fixtures from website.
+ * This service is responsible for removal of imported fixtures from website.
  */
 
-class DefaultFixtureHandler
+class DefaultFixtureCleaner
 {
     private $em;
-    private $fixturesPath;
     private $imageStoragePath;
 
     /**
@@ -19,26 +18,11 @@ class DefaultFixtureHandler
      *
      * @param \Doctrine\ORM\EntityManager $em
      * @param string $imageStoragePath Directory, where website's images storage is located
-     * @param string $fixturesPath Directory, where fixtures are stored
      */
-    public function __construct($em, $imageStoragePath, $fixturesPath)
+    public function __construct($em, $imageStoragePath)
     {
         $this->em = $em;
         $this->imageStoragePath = $imageStoragePath;
-        $this->fixturesPath = $fixturesPath;
-    }
-
-    /**
-     * Read JSON string with fixtures data.
-     *
-     * @return string
-     */
-    public function readFixtureJSON()
-    {
-        $fixtureJSONPath = "{$this->fixturesPath}/json/albums.json";
-        $fixtureJSON = @file_get_contents($fixtureJSONPath);
-
-        return $fixtureJSON;
     }
 
     /**
