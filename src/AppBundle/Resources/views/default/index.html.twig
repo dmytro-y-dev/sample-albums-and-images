@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/app/css/images.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('bundles/app/css/pagination.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('bundles/app/css/albums.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/loader.min.css') }}" type="text/css" />
 {% endblock %}
 
 {% block javascripts %}
@@ -29,6 +30,7 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
+    <script type="text/javascript" src="{{ asset('bundles/app/js/Loader.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/Album.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/Image.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/RootLayout.min.js') }}"></script>

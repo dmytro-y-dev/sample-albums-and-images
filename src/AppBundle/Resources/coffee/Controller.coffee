@@ -14,6 +14,31 @@ App.Controller = Marionette.Controller.extend
 
     this.initializeSidebar =_.once this.refreshSidebar
 
+    this.initializeLoaders()
+
+  initializeLoaders : () ->
+    this.rootLayout.albums.loader = new App.Loader({ parentElement : this.rootLayout.albums.$el })
+    this.rootLayout.albumsWithMaxImages.loader = new App.Loader({ parentElement : this.rootLayout.albumsWithMaxImages.$el })
+    this.rootLayout.images.loader = new App.Loader({ parentElement : this.rootLayout.images.$el })
+
+    this.on 'before:fetch:albums', () ->
+      this.rootLayout.albums.loader.show()
+
+    this.on 'after:fetch:albums', () ->
+      this.rootLayout.albums.loader.hide()
+
+    this.on 'before:fetch:albums-with-max-images', () ->
+      this.rootLayout.albumsWithMaxImages.loader.show()
+
+    this.on 'after:fetch:albums-with-max-images', () ->
+      this.rootLayout.albumsWithMaxImages.loader.hide()
+
+    this.on 'before:fetch:images', () ->
+      this.rootLayout.images.loader.show()
+
+    this.on 'after:fetch:images', () ->
+      this.rootLayout.images.loader.hide()
+
   routeAlbums : () ->
     this.initializeSidebar()
 
@@ -33,13 +58,19 @@ App.Controller = Marionette.Controller.extend
     this.fetchPaginatedImages(id, page);
 
   fetchAlbums : () ->
+    this.trigger('before:fetch:albums');
+
     albums = new App.AlbumsCollection()
     albums.url = Routing.generate 'app_api_get_albums'
     albums.fetch
       success : (response) =>
         this.rootLayout.renderAlbums response
 
+        this.trigger('after:fetch:albums');
+
   fetchAlbumsWithMaxImages : () ->
+    this.trigger('before:fetch:albums-with-max-images');
+
     albums = new App.AlbumsCollection()
 
     albums.url = Routing.generate 'app_api_albums_with_max_images',
@@ -49,7 +80,11 @@ App.Controller = Marionette.Controller.extend
       success : (response) =>
         this.rootLayout.renderAlbumsWithMaxImages response
 
+        this.trigger('after:fetch:albums-with-max-images');
+
   fetchPaginatedImages : (id, page) ->
+    this.trigger('before:fetch:images');
+
     images = new App.ImagesCollection()
 
     images.url = Routing.generate 'app_api_images_paginated',
@@ -66,3 +101,5 @@ App.Controller = Marionette.Controller.extend
 
         this.rootLayout.renderImages images
         this.rootLayout.renderPagination pagination
+
+        this.trigger('after:fetch:images');
