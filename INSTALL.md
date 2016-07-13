@@ -14,11 +14,8 @@ How to install:
 4. Run `php app/console assets:install --symlink web`.
 5. Run `npm install`.
 6. Run `gulp install`.
-7. Open '/api/import-fixture' route to import fixtures into database
-
-                                OR
-
-Do it manually by importing `contrib/albums.sql` script.
+7. Either open '/api/import-fixture' route to import fixtures into database, or do it manually by importing
+`contrib/albums.sql` script.
 8. Test application by opening '/' route.
 
 You can use either `gulp test-php` or `bin\phpunit --coverage-text -c app/phpunit.xml.dist src` to execute PHPUnit tests.
