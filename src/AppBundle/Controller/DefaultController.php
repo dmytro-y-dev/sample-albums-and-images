@@ -15,10 +15,12 @@ class DefaultController extends Controller
 
     public function importFixtureAction(Request $request)
     {
-        $albumFixtureImporter = $this->get("app.album_fixture_importer");
+        $fixturesPath = $this->getParameter('app.fixtures_path');
 
-        $fixtureJSONPath = "../contrib/fixture/json/albums.json";
+        $fixtureJSONPath = "{$fixturesPath}/json/albums.json";
         $fixtureJSON = file_get_contents($fixtureJSONPath);
+
+        $albumFixtureImporter = $this->get("app.album_fixture_importer");
 
         $albums = $albumFixtureImporter->loadAlbumsFromJSON($fixtureJSON);
 
@@ -31,14 +33,16 @@ class DefaultController extends Controller
 
     public function truncateDatabaseAction(Request $request)
     {
+        $storagePath = $this->getParameter('stof_doctrine_extensions.default_file_path');
+
         $em = $this->getDoctrine()->getManager();
 
-        $em->createQuery('DELETE i FROM AppBundle:Image i')
+        $em->createQuery('DELETE FROM AppBundle:Image')
             ->getSingleResult();
-        $em->createQuery('DELETE a FROM AppBundle:Album a')
+        $em->createQuery('DELETE FROM AppBundle:Album')
             ->getSingleResult();
 
-        foreach(glob("../web/storage/images/*") as $file) {
+        foreach(glob("{$storagePath}/images/*") as $file) {
             unlink($file);
         }
 

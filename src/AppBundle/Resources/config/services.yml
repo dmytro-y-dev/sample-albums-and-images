@@ -4,4 +4,4 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - "%stof_doctrine_extensions.default_file_path%/images"
-            - "%kernel.root_dir%/../src/AppBundle/Resources/fixture/images"
+            - "%app.fixtures_path%/images"

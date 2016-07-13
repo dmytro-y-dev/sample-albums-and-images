@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->integerNode('max_images_per_page')->end()
+                ->scalarNode('fixtures_path')->end()
             ->end()
         ;
 

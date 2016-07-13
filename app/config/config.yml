@@ -81,6 +81,7 @@ stof_doctrine_extensions:
 
 app:
     max_images_per_page: 10
+    fixtures_path: %kernel.root_dir%/../contrib/fixture
 
 knp_paginator:
     template:

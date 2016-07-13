@@ -21,7 +21,7 @@ app_api_import_fixture:
     defaults: { _controller: AppBundle:Default:importFixture }
 
 app_api_truncate_database:
-    path: /api/truncate_database
+    path: /api/truncate-database
     defaults: { _controller: AppBundle:Default:truncateDatabase }
 
 app_api_albums_with_max_images:
