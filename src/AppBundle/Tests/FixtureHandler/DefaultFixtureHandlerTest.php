@@ -21,11 +21,7 @@ class DefaultFixtureHandlerTest extends WebTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $fixtureImporter = $this->getMockBuilder(DefaultFixtureImporter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $fixtureHandler = new DefaultFixtureHandler($em, $fixtureImporter, $this->imageStoragePath, $this->fixturesPath);
+        $fixtureHandler = new DefaultFixtureHandler($em, $this->imageStoragePath, $this->fixturesPath);
 
         // Perform assertions
 
@@ -55,11 +51,11 @@ class DefaultFixtureHandlerTest extends WebTestCase
             ->method('importAlbum')
             ->withAnyParameters();
 
-        $fixtureHandler = new DefaultFixtureHandler($em, $fixtureImporter, $this->imageStoragePath, $this->fixturesPath);
+        $fixtureHandler = new DefaultFixtureHandler($em, $this->imageStoragePath, $this->fixturesPath);
 
         // Execute expected code
 
-        $fixtureHandler->importFixtureJSON('{}');
+        $fixtureHandler->importFixtureJSON($fixtureImporter, '{}');
     }
 
     public function testCleanDatabase()
@@ -85,11 +81,7 @@ class DefaultFixtureHandlerTest extends WebTestCase
             ->method('createQuery')
             ->with($this->equalTo('DELETE FROM AppBundle:Album'));
 
-        $fixtureImporter = $this->getMockBuilder(DefaultFixtureImporter::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $fixtureHandler = new DefaultFixtureHandler($em, $fixtureImporter, $this->imageStoragePath, $this->fixturesPath);
+        $fixtureHandler = new DefaultFixtureHandler($em, $this->imageStoragePath, $this->fixturesPath);
 
         // Execute expected code
 

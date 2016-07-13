@@ -12,7 +12,6 @@ namespace AppBundle\FixtureHandler;
 class DefaultFixtureHandler
 {
     private $em;
-    private $fixtureImporter;
     private $fixturesPath;
     private $imageStoragePath;
 
@@ -20,14 +19,12 @@ class DefaultFixtureHandler
      * Default constructor.
      *
      * @param \Doctrine\ORM\EntityManager $em
-     * @param \AppBundle\FixtureImporter\DefaultFixtureImporter $fixtureImporter Object to handle fixtures import
      * @param string $imageStoragePath Directory, where website's images storage is located
      * @param string $fixturesPath Directory, where fixtures are stored
      */
-    public function __construct($em, $fixtureImporter, $imageStoragePath, $fixturesPath)
+    public function __construct($em, $imageStoragePath, $fixturesPath)
     {
         $this->em = $em;
-        $this->fixtureImporter = $fixtureImporter;
         $this->imageStoragePath = $imageStoragePath;
         $this->fixturesPath = $fixturesPath;
     }
@@ -48,14 +45,15 @@ class DefaultFixtureHandler
     /**
      * Import fixtures data from JSON string.
      *
+     * @param \AppBundle\FixtureImporter\DefaultFixtureImporter $fixtureImporter Object to handle fixtures import
      * @param string $fixtureJSON Albums fixtures as JSON string
      */
-    public function importFixtureJSON($fixtureJSON)
+    public function importFixtureJSON($fixtureImporter, $fixtureJSON)
     {
-        $albums = $this->fixtureImporter->loadAlbumsFromJSON($fixtureJSON);
+        $albums = $fixtureImporter->loadAlbumsFromJSON($fixtureJSON);
 
         foreach ($albums as $album) {
-            $this->fixtureImporter->importAlbum($album);
+            $fixtureImporter->importAlbum($album);
         }
     }
 
