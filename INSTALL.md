@@ -3,7 +3,7 @@
 Requirements:
 
 - PHP >= 5.6
-- NodeJS with npm installed
+- NodeJS with npm and Gulp installed
 - Composer
 
 How to install:
@@ -21,7 +21,7 @@ How to install:
 Do it manually by importing `contrib/albums.sql` script.
 8. Test application by opening '/' route.
 
-You can run `gulp test-php` to execute PHP unit tests.
+You can use either `gulp test-php` or `bin\phpunit --coverage-text -c app/phpunit.xml.dist src` to execute PHPUnit tests.
 
 Since `app.php` controller is located in `web` folder, your routes will look like `http://domain.com/web/`,
 `http://domain.com/web/api/import-fixture`, etc.
