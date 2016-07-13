@@ -8,7 +8,7 @@ Requirements:
 
 How to install:
 
-1. Unpack release source code and fixtures (`contrib.zip`) archives to some folder, e.g. 'gallery'.
+1. Unpack release source code and fixtures (`contrib.zip`) archives to same folder.
 2. Set your database parameters in `app/config/config.yml`
 3. Run `composer update`.
 4. Run `php app/console assets:install --symlink web`.
