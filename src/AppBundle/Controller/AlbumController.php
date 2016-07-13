@@ -6,8 +6,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class AlbumController
+ *
+ * This controller is responsible for REST API for objects of Album class.
+ */
+
 class AlbumController extends Controller
 {
+    /**
+     * Get JSON serialized album object by id.
+     *
+     * @param int $id Album's id
+     *
+     * @return JsonResponse
+     */
     public function getAlbumAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -30,6 +43,11 @@ class AlbumController extends Controller
         return new JsonResponse($album);
     }
 
+    /**
+     * Get JSON serialized array of all album objects.
+     *
+     * @return JsonResponse
+     */
     public function getAlbumsAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -42,6 +60,14 @@ class AlbumController extends Controller
         return new JsonResponse($albums);
     }
 
+
+    /**
+     * Get JSON serialized array of album objects, which have $maxImagesCount images at max.
+     *
+     * @param int $maxImagesCount Max images count for album
+     *
+     * @return JsonResponse
+     */
     public function getAlbumsWithMaxImagesAction($maxImagesCount)
     {
         $em = $this->getDoctrine()->getManager();

@@ -1,20 +1,22 @@
 App = App || {}
 
+# Application: Main application class
+
 App.Application = Backbone.Marionette.Application.extend
   albumMaxImagesCount : 10
   websiteRoot : Routing.generate 'app_frontend_home'
 
-  createController : () ->
-    return new App.Controller()
+  # Create application's main controller
 
-  onBeforeStart : () ->
-    # Create application main controller
+  initializeController : () ->
+    this.controller = new App.Controller()
 
-    this.controller = this.createController();
+  # Initialize Backbone routing
 
-    # Initialize Backbone routing
-
+  initializeRouting : () ->
     websiteRoot = this.websiteRoot
+
+    # Enable proper Backbone handling of <a> links
 
     $(document).on 'click', 'a', (event) ->
       fragment = ''
@@ -29,11 +31,19 @@ App.Application = Backbone.Marionette.Application.extend
         event.preventDefault()
         Backbone.history.navigate(fragment, { trigger: true })
 
+    # Start Backbone routing
+
     Backbone.history.start({pushState : true, hashChange: false, root: websiteRoot});
 
-# Start application after DOM is ready
+  # Run initialization procedures before application start
+
+  onBeforeStart : () ->
+    this.initializeController();
+    this.initializeRouting();
 
 $(() ->
+  # Start application after DOM is ready
+
   window.app = new App.Application()
   window.app.start()
 )

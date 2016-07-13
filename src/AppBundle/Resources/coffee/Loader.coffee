@@ -1,9 +1,13 @@
 App = App || {}
 
+# Loader animation for fetching process
+
 App.Loader = Marionette.Object.extend {
   initialize : (options) ->
     this.parentSelector = options.parentElement.selector
     this.isHidden = true
+
+  # Show loader in associated parentElement
 
   show : () ->
     if !this.isHidden
@@ -18,6 +22,8 @@ App.Loader = Marionette.Object.extend {
       <div class="dot"></div>
       <div class="dot"></div>
     </div>'
+
+  # Hide loader in associated parentElement
 
   hide : () ->
     if this.isHidden

@@ -4,6 +4,12 @@ namespace AppBundle\FilenameGenerator;
 
 use Gedmo\Uploadable\FilenameGenerator\FilenameGeneratorInterface;
 
+/**
+ * Class ImageFilenameGenerator
+ *
+ * This class generates custom name for uploaded Image.
+ */
+
 class ImageFilenameGenerator implements FilenameGeneratorInterface
 {
     /**

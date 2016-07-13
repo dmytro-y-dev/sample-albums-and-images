@@ -18,11 +18,11 @@ app_frontend_paginated_images:
 
 app_api_import_fixture:
     path: /api/import-fixture
-    defaults: { _controller: AppBundle:Default:importFixture }
+    defaults: { _controller: AppBundle:Fixture:importFixture }
 
 app_api_truncate_database:
     path: /api/truncate-database
-    defaults: { _controller: AppBundle:Default:truncateDatabase }
+    defaults: { _controller: AppBundle:Fixture:truncateDatabase }
 
 app_api_albums_with_max_images:
     path: /api/albums/filter-max-images/{maxImagesCount}

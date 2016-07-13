@@ -73,17 +73,6 @@
         <div class="image">
             <img src="{{ asset('storage/images/') }}<%= filename %>" />
         </div>
-
-        <div class="description">
-            <%= description %>
-        </div>
-    </script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-        $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
+        <div class="description"><%= description %></div>
     </script>
 {% endblock %}
