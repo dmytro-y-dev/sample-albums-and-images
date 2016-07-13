@@ -22,10 +22,12 @@ class FixtureController extends Controller
     {
         $fixtureHandler = $this->getFixtureHandler();
 
-        $fixtureHandler->importFixtureJSON(
-            $this->get('app.default_fixture_importer'),
-            $fixtureHandler->readFixtureJSON()
-        );
+        $this
+            ->get('app.default_fixture_importer')
+            ->importFixtureFromJSON(
+                $fixtureHandler->readFixtureJSON()
+            )
+        ;
 
         return new Response('done.');
     }

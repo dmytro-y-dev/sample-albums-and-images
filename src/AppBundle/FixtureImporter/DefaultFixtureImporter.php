@@ -33,14 +33,27 @@ class DefaultFixtureImporter
     }
 
     /**
-     * Read JSON string, which contains serialized albums, and convert it
-     * to array of Album objects.
+     * Import fixtures data from JSON string.
+     *
+     * @param string $fixtureJSON Albums fixtures as JSON string
+     */
+    public function importFixtureFromJSON($fixtureJSON)
+    {
+        $albums = $this->deserializeAlbums($fixtureJSON);
+
+        foreach ($albums as $album) {
+            $this->importAlbum($album);
+        }
+    }
+
+    /**
+     * Converts JSON string, which contains serialized albums, to array of Album objects.
      *
      * @param string $albumsJSON JSON serialized albums
      *
      * @return array
      */
-    public function loadAlbumsFromJSON($albumsJSON)
+    public function deserializeAlbums($albumsJSON)
     {
         // Convert JSON string to array
 

@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
 
 class DefaultFixtureHandlerTest extends WebTestCase
 {
-    private $imageStoragePath = '../web/storage/images';
+    private $imageStoragePath = '';
     private $fixturesPath = '';
 
     public function testReadFixtureJSON()
@@ -26,36 +26,6 @@ class DefaultFixtureHandlerTest extends WebTestCase
         // Perform assertions
 
         $this->assertEmpty($fixtureHandler->readFixtureJSON());
-    }
-
-    public function testImportFixtureJSON()
-    {
-        // Initialize SUT object $fixtureHandler and configure mock expectations
-
-        $em = $this->getMockBuilder(EntityManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $fixtureImporter = $this->getMockBuilder(DefaultFixtureImporter::class)
-            ->setMethods(array('loadAlbumsFromJSON', 'importAlbum'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $fixtureImporter->method('loadAlbumsFromJSON')->willReturn(array(new Album(), new Album()));
-
-        $fixtureImporter->expects($this->once())
-            ->method('loadAlbumsFromJSON')
-            ->withAnyParameters();
-
-        $fixtureImporter->expects($this->exactly(2))
-            ->method('importAlbum')
-            ->withAnyParameters();
-
-        $fixtureHandler = new DefaultFixtureHandler($em, $this->imageStoragePath, $this->fixturesPath);
-
-        // Execute expected code
-
-        $fixtureHandler->importFixtureJSON($fixtureImporter, '{}');
     }
 
     public function testCleanDatabase()

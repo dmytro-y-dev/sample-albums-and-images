@@ -5,8 +5,7 @@ namespace AppBundle\FixtureHandler;
 /**
  * Class DefaultFixtureHandler
  *
- * This service is responsible for locating and loading fixtures on website, which DefaultFixtureImporter service uses
- * for importing, and for removal of fixtures data from website.
+ * This service is responsible for locating and reading fixtures and for removal of imported fixtures from website.
  */
 
 class DefaultFixtureHandler
@@ -40,21 +39,6 @@ class DefaultFixtureHandler
         $fixtureJSON = @file_get_contents($fixtureJSONPath);
 
         return $fixtureJSON;
-    }
-
-    /**
-     * Import fixtures data from JSON string.
-     *
-     * @param \AppBundle\FixtureImporter\DefaultFixtureImporter $fixtureImporter Object to handle fixtures import
-     * @param string $fixtureJSON Albums fixtures as JSON string
-     */
-    public function importFixtureJSON($fixtureImporter, $fixtureJSON)
-    {
-        $albums = $fixtureImporter->loadAlbumsFromJSON($fixtureJSON);
-
-        foreach ($albums as $album) {
-            $fixtureImporter->importAlbum($album);
-        }
     }
 
     /**
