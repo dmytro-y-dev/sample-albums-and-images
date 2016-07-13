@@ -7,29 +7,29 @@ use AppBundle\Entity\Image;
 use AppBundle\FilenameGenerator\ImageFilenameGenerator;
 
 /**
- * Class AlbumFixtureImporter
+ * Class DefaultFixtureImporter
  *
- * This service is responsible for loading and importing fixtures into application.
+ * This service is responsible for parsing JSON serialized fixtures and importing them into application.
  */
 
-class AlbumFixtureImporter
+class DefaultFixtureImporter
 {
     private $em;
     private $imageStoragePath;
-    private $imageFixtureFilesPath;
+    private $fixturesPath;
 
     /**
      * Default constructor.
      *
      * @param \Doctrine\ORM\EntityManager $em
      * @param string $imageStoragePath Directory, where website's images storage is located
-     * @param string $imageFixtureFilesPath Directory, where fixture images are located
+     * @param string $fixturesPath Directory, where fixtures are stored
      */
-    public function __construct($em, $imageStoragePath, $imageFixtureFilesPath)
+    public function __construct($em, $imageStoragePath, $fixturesPath)
     {
         $this->em = $em;
         $this->imageStoragePath = $imageStoragePath;
-        $this->imageFixtureFilesPath = $imageFixtureFilesPath;
+        $this->fixturesPath = $fixturesPath;
     }
 
     /**
@@ -42,11 +42,15 @@ class AlbumFixtureImporter
      */
     public function loadAlbumsFromJSON($albumsJSON)
     {
+        // Convert JSON string to array
+
         $albumsArray = @json_decode($albumsJSON, true);
 
         if (empty($albumsArray)) {
             return array();
         }
+
+        // Convert array of Album arrays to array of Album objects
 
         $albums = array();
 
@@ -62,8 +66,8 @@ class AlbumFixtureImporter
     }
 
     /**
-     * Convert array of plain images from $imagesArray to Image objects and
-     * add to parent album $album.
+     * Convert $imagesArray (which is array of Image arrays) to array of Image objects and
+     * add resulting objects array to parent album $album.
      *
      * @param \AppBundle\Entity\Album $album Parent album
      * @param array $imagesArray Album's images
@@ -129,8 +133,8 @@ class AlbumFixtureImporter
             $originalFilenameWithoutExtension, $originalExtension, $image
         ); // newly generated full filename with extension
 
-        copy(
-            $this->imageFixtureFilesPath.'/'.$originalFilename,
+        @copy(
+            $this->fixturesPath.'/images/'.$originalFilename,
             $this->imageStoragePath.'/'.$newFilename
         );
 

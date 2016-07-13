@@ -38,7 +38,7 @@ gulp.task('install-deps', [
         .pipe(gulp.dest('web/bundles/app/js'));
 });
 
-gulp.task('test-php', shell.task('bin\\phpunit --coverage-text -c app/phpunit.xml.dist src'));
+gulp.task('test-php', shell.task('bin\\phpunit --coverage-text -c app/phpunit.xml.dist src', {}));
 
 gulp.task('install-backbone', function() {
     return gulp.src('node_modules/backbone/**')

@@ -14,48 +14,43 @@ use Symfony\Component\HttpFoundation\Response;
 class FixtureController extends Controller
 {
     /**
-     * Import fixtures into database.
+     * Import fixtures onto website.
      *
      * @return Response
      */
     public function importFixtureAction()
     {
-        $fixturesPath = $this->getParameter('app.fixtures_path');
+        $fixtureHandler = $this->getFixtureHandler();
 
-        $fixtureJSONPath = "{$fixturesPath}/json/albums.json";
-        $fixtureJSON = file_get_contents($fixtureJSONPath);
-
-        $albumFixtureImporter = $this->get('app.album_fixture_importer');
-
-        $albums = $albumFixtureImporter->loadAlbumsFromJSON($fixtureJSON);
-
-        foreach ($albums as $album) {
-            $albumFixtureImporter->importAlbum($album);
-        }
+        $fixtureHandler->importFixtureJSON(
+            $fixtureHandler->readFixtureJSON()
+        );
 
         return new Response('done.');
     }
 
     /**
-     * Remove all fixtures data from database.
+     * Remove all fixtures from website.
      *
      * @return Response
      */
     public function truncateDatabaseAction()
     {
-        $storagePath = $this->getParameter('stof_doctrine_extensions.default_file_path');
+        $fixtureHandler = $this->getFixtureHandler();
 
-        $em = $this->getDoctrine()->getManager();
-
-        $em->createQuery('DELETE FROM AppBundle:Image')
-            ->getSingleResult();
-        $em->createQuery('DELETE FROM AppBundle:Album')
-            ->getSingleResult();
-
-        foreach(glob("{$storagePath}/images/*") as $file) {
-            unlink($file);
-        }
+        $fixtureHandler->cleanDatabase();
+        $fixtureHandler->cleanFilesStorage();
 
         return new Response('done.');
+    }
+
+    /*
+     * Get DefaultFixtureHandler service.
+     *
+     * @return \AppBundle\FixtureHandler\DefaultFixtureHandler
+     */
+    public function getFixtureHandler()
+    {
+        return $this->get('app.default_fixture_handler');
     }
 }

@@ -1,7 +1,15 @@
 services:
-    app.album_fixture_importer:
-        class: AppBundle\FixtureImporter\AlbumFixtureImporter
+    app.default_fixture_importer:
+        class: AppBundle\FixtureImporter\DefaultFixtureImporter
         arguments:
-            - @doctrine.orm.entity_manager
+            - "@doctrine.orm.entity_manager"
             - "%stof_doctrine_extensions.default_file_path%/images"
-            - "%app.fixtures_path%/images"
+            - "%app.fixtures_path%"
+
+    app.default_fixture_handler:
+        class: AppBundle\FixtureHandler\DefaultFixtureHandler
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.default_fixture_importer"
+            - "%stof_doctrine_extensions.default_file_path%/images"
+            - "%app.fixtures_path%"

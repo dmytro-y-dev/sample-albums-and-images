@@ -25,14 +25,12 @@ class AlbumController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        // If no album was found, NoResultException will be thrown after next expression
+
         $album = $em
             ->getRepository('AppBundle:Album')
             ->findOneWithoutQueryingImages($id)
         ;
-
-        if (empty($album)) {
-            return new Response('{}');
-        }
 
         $album['images'] = $em
             ->getRepository('AppBundle:Image')
@@ -74,7 +72,7 @@ class AlbumController extends Controller
 
         $albums = $em
             ->getRepository('AppBundle:Album')
-            ->findAllWithMaxImages($maxImagesCount)
+            ->findAllWithMaxImages((int)$maxImagesCount)
         ;
 
         return new JsonResponse($albums);
