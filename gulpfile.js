@@ -41,37 +41,37 @@ gulp.task('install-deps', [
 gulp.task('test-php', shell.task('bin\\phpunit --coverage-text -c app/phpunit.xml.dist src'));
 
 gulp.task('install-backbone', function() {
-    gulp.src('node_modules/backbone/**')
+    return gulp.src('node_modules/backbone/**')
         .pipe(gulp.dest('web/bundles/backbone'));
 });
 
 gulp.task('install-bootstrap', function() {
-    gulp.src('node_modules/bootstrap/dist/**')
+    return gulp.src('node_modules/bootstrap/dist/**')
         .pipe(gulp.dest('web/bundles/bootstrap'));
 });
 
 gulp.task('install-marionette', function() {
-    gulp.src('node_modules/backbone.marionette/lib/**')
+    return gulp.src('node_modules/backbone.marionette/lib/**')
         .pipe(gulp.dest('web/bundles/marionette'));
 });
 
 gulp.task('install-masonry', function() {
-    gulp.src('node_modules/masonry-layout/dist/**')
+    return gulp.src('node_modules/masonry-layout/dist/**')
         .pipe(gulp.dest('web/bundles/masonry'));
 });
 
 gulp.task('install-jquery', function() {
-    gulp.src('node_modules/jquery/dist/**')
+    return gulp.src('node_modules/jquery/dist/**')
         .pipe(gulp.dest('web/bundles/jquery'));
 });
 
 gulp.task('install-underscore', function() {
-    gulp.src('node_modules/underscore/**')
+    return gulp.src('node_modules/underscore/**')
         .pipe(gulp.dest('web/bundles/underscore'));
 });
 
 gulp.task('install-imagesloaded', function() {
-    gulp.src('node_modules/imagesloaded/imagesloaded*')
+    return gulp.src('node_modules/imagesloaded/imagesloaded*')
         .pipe(gulp.dest('web/bundles/imagesloaded'));
 });
 
