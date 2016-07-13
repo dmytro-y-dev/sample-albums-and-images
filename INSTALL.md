@@ -15,8 +15,8 @@ How to install:
 5. Run `npm install`.
 6. Run `gulp install`.
 7. You can import fixtures either automatically or manually.
-7.1. If you want to import automatically, open '/api/import-fixture' route. 
-7.2. If you want to import fixtures manually, import `contrib/albums.sql` script to database and copy contents of `contrib/web` folder to `web` folder.
+  1. If you want to import automatically, open '/api/import-fixture' route. 
+  2. If you want to import fixtures manually, import `contrib/albums.sql` script to database and copy contents of `contrib/web` folder to `web` folder.
 8. Test application by opening '/' route.
 
 You can use either `gulp test-php` or `bin\phpunit --coverage-text -c app/phpunit.xml.dist src` to execute PHPUnit tests.
